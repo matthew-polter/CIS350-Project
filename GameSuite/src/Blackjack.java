@@ -146,6 +146,12 @@ public class Blackjack extends Player {
         blackjackDeck.add(new Card(1, 11, "spades", new ImageIcon("Images" + File.separator + "motorhead.png")));
     }
 
+    /**
+     * Gets the ArrayList of Blackjack cards.
+     * 
+     * @author Matthew Polter
+     * @return The ArrayList of Blackjack cards.
+     */
     public ArrayList<Card> getBlackjackDeck() {
         return this.blackjackDeck;
     }
@@ -199,11 +205,28 @@ public class Blackjack extends Player {
         this.dealerSum = this.dealerCards.get(0).getValue() + dealerCards.get(1).getValue();
     }
 
+    /**
+     * Gets the current size of the deck to prevent the random number generator
+     * from selecting an index out of bounds after a card is given to a player
+     * and removed from the deck.
+     * 
+     * @author Matthew Polter
+     * @return The size of the deck.
+     */
     public int getCurrentSizeOfDeck() {
         currentDeckSize = blackjackDeck.size();
         return currentDeckSize;
     }
 
+    /**
+     * Uses a random number generator to get an index to select a card
+     * from the deck of cards.
+     * 
+     * The range of values depends on the current size of the deck.
+     * 
+     * @author Matthew Polter
+     * @return A random card index.
+     */
     public int getRandomDeckIndex() {
         randomIndex = this.rand.nextInt(this.getCurrentSizeOfDeck());
         return randomIndex;

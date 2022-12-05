@@ -336,6 +336,13 @@ public class Sudoku {
         }
     }
 
+    /**
+     * Compares the player board to the master key and determines
+     * how many mistakes the player made.
+     * 
+     * @author Matthew Polter
+     * @return The number of mistakes made by the player.
+     */
     public int getMistakes() {
         return this.mistakes;
     }

@@ -10,7 +10,7 @@ public class Player extends Card {
     private ArrayList<Card> playerCards = new ArrayList<Card>();
 
     /**
-     * Creaete a new player.
+     * Euchre Constructor.
      * 
      * @author Matthew Polter
      * @param playerNum Sets the player number.
@@ -26,11 +26,19 @@ public class Player extends Card {
         this.isPlayerTurn = isPlayerTurn;
     }
 
+    /**
+     * Blackjack constructor.
+     * 
+     * @author Matthew Polter
+     * @param playerNum The number you would like to set for the Player
+     */
     public Player(int playerNum) {
         super(0, 0, "sample", new ImageIcon());
     }
 
     /**
+     * Gets the number of the current player.
+     * 
      * @author Matthew Polter
      * @return Get the player number
      */
@@ -39,6 +47,8 @@ public class Player extends Card {
     }
 
     /**
+     * Returns whether or not the current player is the dealer.
+     * 
      * @author Matthew Polter
      * @return True if the pplayer is the dealer, false otherwise.
      */
@@ -47,6 +57,8 @@ public class Player extends Card {
     }
 
     /**
+     * Checks if it is the current players turn.
+     * 
      * @author Matthew Polter
      * @return True if it is the players turn, false otherwise.
      */
@@ -55,6 +67,8 @@ public class Player extends Card {
     }
 
     /**
+     * Sets the players turn to true or false.
+     * 
      * @author Matthew Polter
      * @param isPlayerTurn Sets isPlayerTurn to whatever boolean
      * value is given in this parameter.
@@ -64,6 +78,8 @@ public class Player extends Card {
     }
 
     /**
+     * Gives each player 5 cards to start the round.
+     * 
      * @author Matthew Polter
      * @param arr Give an array of cards to this player to start the
      * game.
@@ -75,6 +91,8 @@ public class Player extends Card {
     }
 
     /**
+     * Gives a card to the current player.
+     * 
      * @author Matthew Polter
      * @param card Gives a card object to the player.
      */
@@ -83,6 +101,8 @@ public class Player extends Card {
     }
 
     /**
+     * Gets a specific card from the Players deck.
+     * 
      * @author Matthew Polter
      * @param index The index of the card you want to return.
      * @return The card at the index given as a parameter.
@@ -92,6 +112,8 @@ public class Player extends Card {
     }
 
     /**
+     * Gets the ArrayList of Cards the player has.
+     * 
      * @author Matthew Polter
      * @return The ArrayList of cards that the player currently has.
      */

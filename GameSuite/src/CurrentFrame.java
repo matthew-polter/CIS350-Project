@@ -450,7 +450,7 @@ public class CurrentFrame extends JFrame implements ActionListener {
             }
         }
         if(e.getSource() == finalizeButton) {
-            this.createResultFrame("Player " + euchre.getWinner().getNumber() + " wins!");
+            this.createResultFrame("Player " + euchre.getWinner().getPlayerNumber() + " wins!");
         }
         
         

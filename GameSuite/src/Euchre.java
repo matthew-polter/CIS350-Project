@@ -194,6 +194,8 @@ public class Euchre extends Player{
     }
 
     /**
+     * Gets the ArrayList of card currently in the deck.
+     * 
      * @author Matthew Polter
      * @return The current state of the deck of cards.
      */
@@ -248,6 +250,9 @@ public class Euchre extends Player{
     }
 
     /**
+     * Gets the current color of the trump card to help determine the ranks
+     * of the cards in the deck.
+     * 
      * @author Matthew Polter
      * @return The color of the current trump card.
      */
@@ -324,6 +329,8 @@ public class Euchre extends Player{
     }
 
     /**
+     * Sets the card that a player has played for the current round.
+     * 
      * @author Matthew Polter
      * @param card The card the player wants to play.
      * @param index The index of the player card played.
@@ -333,6 +340,8 @@ public class Euchre extends Player{
     }
 
     /**
+     * Gets the card that a player has played for the current round.
+     * 
      * @author Matthew Polter
      * @param index The index of the card played.
      * @return The played Card at the index.
@@ -342,6 +351,9 @@ public class Euchre extends Player{
     }
 
     /**
+     * Finds the winner of the game by comparing the ranks of each of the player
+     * cards played.
+     * 
      * @author Matthew Polter
      * @return The player that won the round.
      */
@@ -356,6 +368,8 @@ public class Euchre extends Player{
     }
 
     /**
+     * Sets the current trump card.
+     * 
      * @author Matthew Polter
      * @param trump Set the value of the current trump card.
      */
@@ -364,6 +378,8 @@ public class Euchre extends Player{
     }
 
     /**
+     * Gets the current trump suit.
+     * 
      * @author Matthew Polter
      * @return The current value of the trump card.
      */
@@ -371,10 +387,25 @@ public class Euchre extends Player{
         return this.trump;
     }
 
+    /**
+     * Gets the specified player object based on the parameter.
+     * 
+     * @author Matthew Polter
+     * @param playerNum The number of the player you would like to get.
+     * @return The player specified by the parameter.
+     */
     public Player getPlayer(int playerNum) {
         return this.player[playerNum];
     }
 
+    /**
+     * Gets a specific Card for a specific Player.
+     * 
+     * @author Matthew Polter
+     * @param index The number of the Card you would like to get.
+     * @param playerNum The number of the Player you would like to get.
+     * @return
+     */
     public Card getPlayerCard(int index, int playerNum) {
         return player[playerNum].getCard(index);
     }
