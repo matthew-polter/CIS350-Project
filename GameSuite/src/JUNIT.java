@@ -118,4 +118,110 @@ public class JUNIT {
         test.checkCorrect();
         assertEquals(0, test.getMistakes());
     }
+    
+     @Test
+    public void testStartgame(){
+        Blackjack test = new Blackjack();
+        test.startGame();
+        assertEquals(9,  test.getLevelStart()[0][0]);
+    }
+    @Test
+    public void teststartGame(){
+        Blackjack test = new BlackJack();
+        assertEqual(0, test.playerSum()[0]);
+        assertEqual(0, test.dealerSum()[0]);
+        assertEquals(0, test.flag()[0]);
+    }
+    
+    @Test
+    public void testplayerHit(){
+        Random name = new Random();
+        ArrayList<integer>playerCards = new ArrayList();
+        Blackjack test = new BlackJack();
+        assertEquals(1, test.size()[1]);
+    }
+
+
+    @Test
+    public void testdealerCards(){
+        Random name = new Random();
+        ArrayList<integer>dealerCards = new ArrayList();
+        Blackjack test = new Blackjack();
+        assertEquals(1, test.size()[1]);
+    }
+
+    @Test
+    public void testcompareCards(){
+        ArrayList<integer>playerCards = new ArrayList(4);
+        ArrayList<integer>dealerCards = new ArrayList(3);
+        assertTrue(ArrayList(playerCards) > ArrayList(dealerCards));
+        ArrayList(6); ArrayList(8);
+        assertTrue(ArrayList(playerCards) < ArrayList(dealerCards));
+    }
+
+    @Test
+    public void testgetPlayerCrads(){
+        ArrayList<integer>playerCards = new ArrayList();
+        ArrayList(7);
+        assertArrayEquals(playerCards, 7);
+    }
+
+    @Test
+    public void testDealerCards(){
+        ArrayList<integer>dealerCards = new ArrayList();
+        ArrayList(4);
+        assertArrayEquals(dealerCards, 4);
+    }
+
+    @Test
+    public void testgetPlayerSum(){
+        ArrayList<integer>playerCards = new ArrayList(5);
+        playerSum(5);
+        assertArrayEquals(playerCards, 5);
+    }
+
+    @Test
+    public void testgetDealerSum(){
+        ArrayList<integer>dealerCards = new ArrayList(8);
+        dealerSum(8);
+        assertArrayEquals(dealerCards, 8);
+    }
+
+    @Test
+    public void testgetAceChecked(){
+        ArrayList<integer>playerCards = new ArrayList(11);
+        checkAce();
+        aceCheckCards();
+        assertEquals(aceCheckCards(),1);
+        assertArrayEquals(playerCards, 1);
+    }
+
+    @Test
+    public void testsetDealerCards(){
+        ArrayList<integer>dealerCards = new ArrayList(4);
+        ArrayList(7);
+        assertArrayEquals(dealerCards,7);
+    }
+
+    @Test
+    public void testsetDealerSum(){
+        ArrayList<integer>playerCards = new ArrayList(5);
+        dealerSum(9);
+        assertFalse(playerCards, dealerSum());
+    }
+
+    @Test
+    public void testsetPlayerCards(){
+        ArrayList<integer>playerCards = new ArrayList(4);
+        dealerSum(7);
+        assertFalse(playerCards, dealerSum());
+    }
+
+    @Test
+    public void testsetPlayerSum(){
+        ArrayList<integer>playerCards = new ArrayList(5);
+        playerSum(9);
+        assertFalse(playerCards, playerSum());
+    }
+}
 }
