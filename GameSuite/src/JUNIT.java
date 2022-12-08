@@ -3,6 +3,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+
 import org.junit.Test;
 
 public class JUNIT {
@@ -117,5 +118,112 @@ public class JUNIT {
         test.setEqual();
         test.checkCorrect();
         assertEquals(0, test.getMistakes());
+    }
+    
+    @Test
+    public void testStartgame(){
+        Blackjack test = new Blackjack();
+        test.startGame();
+        assertEquals(test.getPlayerCards().size() == 2, true); 
+        assertEquals(test.getDealerCards().size() == 2, true); 
+        assertEquals(test.getPlayerCards().get(0).getValue()+
+        test.getPlayerCards().get(1).getValue()==test.getPlayerSum(),true);
+        assertEquals(test.getDealerCards().get(0).getValue()
+        + test.getDealerCards().get(1).getValue()== test.getDealerSum(), true);
+    }
+    @Test
+    public void teststartGame(){
+        Blackjack test = new Blackjack();
+        assertEquals(0, test.getPlayerSum());
+        assertEquals(0, test.getDealerSum());
+    }
+    
+    @Test
+    public void testplayerHit(){
+        Blackjack test = new Blackjack();
+        test.startGame();
+        test.playerHit();
+        assertEquals(3, test.getPlayerCards().size());
+    }
+
+
+    @Test
+    public void testdealerCards(){
+        Blackjack test = new Blackjack();
+        test.startGame();
+        test.setDealerCards(1,1);
+        assertEquals(1, test.getDealerCards().get(1).getValue());
+    }
+
+    @Test
+    public void testcompareCards(){
+        Blackjack test = new Blackjack();
+        test.setDealerSum(2);
+        test.setPlayerSum(4);
+        assertEquals(1,test.compareCards());
+        test.setDealerSum(4);
+        test.setPlayerSum(3);
+        assertEquals(-1,test.compareCards());
+        test.setDealerSum(3);
+        test.setPlayerSum(3);
+        assertEquals(0,test.compareCards());
+
+
+
+        
+    }
+
+    @Test
+    public void testgetPlayerCards(){
+        Blackjack test = new Blackjack();
+        test.startGame();
+        test.setPlayerCards(1,1);
+        assertEquals(1, test.getPlayerCards().get(1).getValue());
+    }
+
+
+    @Test
+    public void testgetPlayerSum(){
+        Blackjack test = new Blackjack();
+        test.setPlayerSum(10);
+        assertEquals(10,test.getPlayerSum());
+        
+    }
+
+    @Test
+    public void testgetDealerSum(){
+        Blackjack test = new Blackjack();
+        test.setDealerSum(10);
+        assertEquals(10,test.getDealerSum());
+    }
+
+    @Test
+    public void testgetAceChecked(){
+        Blackjack test = new Blackjack();
+        test.startGame();
+        test.setPlayerCards(0,1);
+    }
+/**
+ * Euchre Test Cases
+ */
+    @Test
+    public void testgetPlayedCardEuchre(){
+        Euchre test = new Euchre();
+        test.setPlayedCard(test, 1);
+        assertEquals(test,test.getPlayedCard(1));
+    }
+
+    @Test
+    public void testgetTrumpCard(){
+        Euchre test = new Euchre();
+        test.setTrump("hearts");
+        assertEquals("hearts",test.getTrump());
+    }
+
+    @Test
+    public void testgetPlayer(){
+        Euchre test = new Euchre();
+        test.changeTurn();
+        assertEquals(0,test.getNumber());
     }
 }
