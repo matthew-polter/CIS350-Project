@@ -31,15 +31,16 @@ public class CurrentFrame extends JFrame implements ActionListener {
     private JLabel playerCard2;
 
     private JFrame menuFrame;
-    private JPanel menuBackgroundPanel;
+    private JLabel menuBackgroundLabel;
+    private JLabel blackjackButtonText;
     private JButton blackjackButton;
     private JButton sudokuButton;
     private JButton euchreButton;
 
     private JFrame playerResultFrame;
+    private JLabel resultBackground;
     private JLabel playerResultText;
     private JButton playerResultExitButton;
-    private JPanel playerResultPanel;
 
     private JFrame sudokuFrame;
     private JLabel sudokuLabel;
@@ -83,7 +84,7 @@ public class CurrentFrame extends JFrame implements ActionListener {
             dealerCardImageLabels.add(dealerCard1);
             dealerCard1.setBounds(68, 84, 66, 96);
             dealerCard1.setVisible(true);
-            dealerCard2 = new JLabel(blackjack.getDealerCards().get(1).getImage());
+            dealerCard2 = new JLabel(new ImageIcon("Images" + File.separator + "mystery-card.png"));
             dealerCardImageLabels.add(dealerCard2);
             dealerCard2.setBounds(144, 84, 66, 96);
             dealerCard2.setVisible(true);
@@ -107,6 +108,13 @@ public class CurrentFrame extends JFrame implements ActionListener {
             stayButton.setEnabled(true);
             splitButton.setEnabled(true);
             playButton.setEnabled(false);
+
+            if(blackjack.getPlayerSum() > 21) {
+                this.createResultFrame("You have gone bust! YOU LOSE!");
+            }
+            if(blackjack.getDealerSum() > 21) {
+                this.createResultFrame("The dealer has gone bust! YOU WIN!");
+            }
 
             SwingUtilities.updateComponentTreeUI(blackjackFrame);
         }
@@ -169,6 +177,17 @@ public class CurrentFrame extends JFrame implements ActionListener {
             backgroundLabel.remove(dealerCard2);
             backgroundLabel.remove(playerCard1);
             backgroundLabel.remove(playerCard2);
+
+            euchre.getDeck().clear();
+            euchreLabel.remove(trumpLabel);
+            for(int i = 0; i < 4; i++) {
+                euchre.getPlayer(i).getCards().clear();
+            }
+            for(int i = 0; i < 4; i++) {
+                for(int j = 0; j < 5; j++) {
+                    euchreLabel.remove(playerCardButtons[i][j]);
+                }
+            }
 
             SwingUtilities.updateComponentTreeUI(blackjackFrame);
             SwingUtilities.updateComponentTreeUI(sudokuFrame);
@@ -242,18 +261,21 @@ public class CurrentFrame extends JFrame implements ActionListener {
                 }
             }
             euchre.setTrump(euchre.getPlayerCard(0, 0).getSuit());
-            trumpLabel = new JLabel("Trump Suit: " + euchre.getTrump());
-            trumpLabel.setBounds(740, 240, 193, 70);
+            trumpLabel = new JLabel("Trump Suit: " + euchre.getTrump(), SwingConstants.CENTER);
+            trumpLabel.setBounds(732, 240, 193, 70);
             trumpLabel.setForeground(new Color(253, 217, 179));
             euchreLabel.add(trumpLabel);
             SwingUtilities.updateComponentTreeUI(euchreFrame);
         }
         if(currentGame.equals("euchre")) {
+            euchre.updateCurrentPlayerNum();
             for(int i = 0; i < 4; i++) {
                 for(int j = 0; j < 5; j++) {
                     if(e.getSource() == playerCardButtons[i][j]) {
                         euchre.setPlayedCard(euchre.getPlayerCard(j, i).getCard(), i);
                         playedCard[i] = euchre.getPlayerCard(j, i).getCard();
+                        euchre.changeTurn();
+                        euchre.updateCurrentPlayerNum();
                     }
                 }
             }
@@ -450,6 +472,7 @@ public class CurrentFrame extends JFrame implements ActionListener {
             }
         }
         if(e.getSource() == finalizeButton) {
+            euchre.rankCards();
             this.createResultFrame("Player " + euchre.getWinner().getPlayerNumber() + " wins!");
         }
         
@@ -466,39 +489,66 @@ public class CurrentFrame extends JFrame implements ActionListener {
 
         // Frame setup
         menuFrame = new JFrame("Menu");
-        menuFrame.setSize(400, 200);
+        menuFrame.setSize(414, 237);
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menuFrame.setVisible(true);
         menuFrame.setLocationRelativeTo(null);
 
-        menuBackgroundPanel = new JPanel();
-        menuBackgroundPanel.setSize(400, 200);
+        menuBackgroundLabel = new JLabel(new ImageIcon("Images" + File.separator + "result-background.png"));
+        menuBackgroundLabel.setBounds(0, 0, 400, 200);
+        menuBackgroundLabel.setVisible(true);
 
-        menuFrame.add(menuBackgroundPanel);
+        menuFrame.add(menuBackgroundLabel);
 
         // Create button to take you to the Blackjack frame
-        blackjackButton = new JButton("Blackjack");
-        blackjackButton.setBounds(50, 5, 300, 50);
+        JPanel blackjackButtonTextPanel = new JPanel();
+        blackjackButtonTextPanel.setBackground(new Color(102, 57, 49));
+        blackjackButtonTextPanel.setBounds(0, 0, 300, 50);
+        blackjackButtonText = new JLabel("Blackjack", SwingConstants.CENTER);
+        blackjackButtonText.setSize(100, 50);
+        blackjackButtonText.setForeground(new Color(253, 217, 179));
+        blackjackButton = new JButton(new ImageIcon("Images" + File.separator + "menu-button-background.png"));
+        blackjackButton.setBounds(50, 16, 300, 50);
         blackjackButton.setFocusable(false);
         blackjackButton.setBorderPainted(false);
-        menuBackgroundPanel.add(blackjackButton);
+        blackjackButtonTextPanel.add(blackjackButtonText);
+        blackjackButton.add(blackjackButtonTextPanel);
+        menuBackgroundLabel.add(blackjackButton);
         blackjackButton.addActionListener(this);
 
         // Create button to take you to the Sudoku frame
-        sudokuButton = new JButton("Sudoku");
-        sudokuButton.setBounds(50, 55, 300, 50);
+        JPanel sudokuButtonTextPanel = new JPanel();
+        sudokuButtonTextPanel.setBackground(new Color(102, 57, 49));
+        sudokuButtonTextPanel.setBounds(0, 0, 300, 50);
+        JLabel sudokuButtonText = new JLabel("Sudoku", SwingConstants.CENTER);
+        sudokuButtonText.setBounds(0, 0, 300, 50);
+        sudokuButtonText.setForeground(new Color(253, 217, 179));
+        sudokuButton = new JButton(new ImageIcon("Images" + File.separator + "menu-button-background.png"));
+        sudokuButton.setBounds(50, 74, 300, 50);
         sudokuButton.setFocusable(false);
         sudokuButton.setBorderPainted(false);
-        menuBackgroundPanel.add(sudokuButton);
+        sudokuButtonTextPanel.add(sudokuButtonText);
+        sudokuButton.add(sudokuButtonTextPanel);
+        menuBackgroundLabel.add(sudokuButton);
         sudokuButton.addActionListener(this);
 
         // Create button to take you to the Euchre frame
-        euchreButton = new JButton("Euchre");
-        euchreButton.setBounds(50, 105, 300, 50);
+        JPanel euchreButtonTextPanel = new JPanel();
+        euchreButtonTextPanel.setBackground(new Color(102, 57, 49));
+        euchreButtonTextPanel.setBounds(0, 0, 300, 50);
+        JLabel euchreButtonText = new JLabel("Euchre", SwingConstants.CENTER);
+        euchreButtonText.setBounds(0, 0, 300, 50);
+        euchreButtonText.setForeground(new Color(253, 217, 179));
+        euchreButton = new JButton(new ImageIcon("Images" + File.separator + "menu-button-background.png"));
+        euchreButton.setBounds(50, 132, 300, 50);
         euchreButton.setFocusable(false);
         euchreButton.setBorderPainted(false);
-        menuBackgroundPanel.add(euchreButton);
+        euchreButtonTextPanel.add(euchreButtonText);
+        euchreButton.add(euchreButtonTextPanel);
+        menuBackgroundLabel.add(euchreButton);
         euchreButton.addActionListener(this);
+
+        SwingUtilities.updateComponentTreeUI(menuFrame);
     }
 
     /**
@@ -564,25 +614,36 @@ public class CurrentFrame extends JFrame implements ActionListener {
 
     public void createResultFrame(String text) {
         playerResultFrame = new JFrame("Blackjack");
-        playerResultText = new JLabel(text);
-        playerResultExitButton = new JButton("EXIT");
-        playerResultExitButton.setBounds(75, 150, 50, 25);
+
+        playerResultText = new JLabel(text, SwingConstants.CENTER);
+        playerResultText.setBounds(50, 50, 300, 50);
+        playerResultText.setForeground(new Color(253, 217, 179));
+
+        JPanel playerResultExitButtonPanel = new JPanel();
+        playerResultExitButtonPanel.setBounds(0, 0, 100, 50);
+        playerResultExitButtonPanel.setBackground(new Color(102, 57, 49));
+        JLabel playerResultExitButtonText = new JLabel("EXIT", SwingConstants.CENTER);
+        playerResultExitButtonText.setForeground(new Color(253, 217, 179));
+        playerResultExitButtonPanel.add(playerResultExitButtonText);
+        playerResultExitButton = new JButton(new ImageIcon("Images" + File.separator + "result-exit-button-background.png"));
+        playerResultExitButton.setBounds(150, 125, 100, 50);
         playerResultExitButton.setFocusable(false);
+        playerResultExitButton.setBorderPainted(false);
         playerResultExitButton.addActionListener(this);
+        playerResultExitButton.add(playerResultExitButtonPanel);
 
         
         playerResultFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         playerResultFrame.setLayout(null);
         playerResultFrame.setVisible(true);
-        playerResultFrame.setSize(400, 200);
+        playerResultFrame.setSize(414, 237);
         playerResultFrame.setLocationRelativeTo(null);
 
-        playerResultPanel = new JPanel();
-        playerResultPanel.setSize(400, 200);
-        playerResultFrame.add(playerResultPanel);
-        playerResultText.setBounds(50, 90, 100, 20);
-        playerResultPanel.add(playerResultText);
-        playerResultPanel.add(playerResultExitButton);
+        resultBackground = new JLabel(new ImageIcon("Images" + File.separator + "result-background.png"));
+        resultBackground.setBounds(0, 0, 400, 200);
+        playerResultFrame.add(resultBackground);
+        resultBackground.add(playerResultText);
+        resultBackground.add(playerResultExitButton);
     }
 
     public void createSudokuFrame() {
@@ -685,7 +746,7 @@ public class CurrentFrame extends JFrame implements ActionListener {
         sudokuLabel.add(numberPadPanel);
     }
     public void createEuchreFrame() {
-        euchreLabelBackground = new ImageIcon("Images" + File.separator + "Blackjack-background.png");
+        euchreLabelBackground = new ImageIcon("Images" + File.separator + "euchre-background.png");
         euchreFrame = new JFrame("Euchre");
         euchreLabel = new JLabel(euchreLabelBackground);
         
@@ -711,10 +772,17 @@ public class CurrentFrame extends JFrame implements ActionListener {
         euchreLabel.add(euchrePlayButton);
         euchrePlayButton.addActionListener(this);
 
-        finalizeButton = new JButton("Finalize Results");
-        finalizeButton.setBounds(732, 400, 193, 70);
+        JPanel finalizePanel = new JPanel();
+        finalizePanel.setBounds(0, 0, 193, 70);
+        finalizePanel.setBackground(new Color(102, 57, 49));
+        JLabel finalizeText = new JLabel("FINALIZE", SwingConstants.CENTER);
+        finalizeText.setForeground(new Color(253, 217, 179));
+        finalizeButton = new JButton(new ImageIcon("Images" + File.separator + "finalize-background.png"));
+        finalizeButton.setBounds(732, 440, 193, 70);
         finalizeButton.setFocusable(false);
         finalizeButton.setBorderPainted(false);
+        finalizePanel.add(finalizeText);
+        finalizeButton.add(finalizePanel);
         euchreLabel.add(finalizeButton);
         finalizeButton.addActionListener(this);
     }
